@@ -1,0 +1,25 @@
+library(igraph)
+NetworkEL <- read.csv(file.choose("E:/outputcp_file.csv"), header=TRUE, na.strings="")
+dim(NetworkEL)
+head(NetworkEL)
+class(NetworkEL)
+Network_Matrix <- as.matrix(NetworkEL)
+class(Network_Matrix)
+head(Network_Matrix)
+g <- graph_from_edgelist(Network_Matrix, directed=FALSE)
+gD <- graph_from_edgelist(Network_Matrix, directed=TRUE)
+Degree <- degree(g)
+Indegree.Undirected <- degree(g, mode="in")
+Outdegree.Undirected <- degree(g, mode="out")
+
+Degree.Directed <- degree(gD)
+Indegree <- degree(gD, mode="in")
+Outdegree <- degree(gD, mode="out")
+CompareDegree <- cbind(Degree, Indegree.Undirected, Outdegree.Undirected, Degree.Directed, Indegree, Outdegree)
+head(CompareDegree)
+Eig <- evcent(g)$vector
+Hub <- hub.score(g)$vector
+Authority <- authority.score(g)$vector
+Closeness <- closeness(g)
+Betweenness <- betweenness(g)
+centralities <- cbind(Degree, Eig, Hub, Authority, Closeness, Reach_2, Reach_3, Betweenness)
